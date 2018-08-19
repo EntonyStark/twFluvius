@@ -1,5 +1,18 @@
 .main-page {
 	@include centerPage;
+
+	&__btn {
+		border-radius: 3px;
+		padding: 0 3rem;
+		background-color: $color-grey-2;
+		outline: none !important;
+		margin-top: 2rem;
+		transition: transform 0.2s;
+		cursor: pointer;
+		&:hover {
+			transform: translateY(3px);
+		}
+	}
 }
 
 .additional-content {

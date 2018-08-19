@@ -4,7 +4,7 @@ import * as Types from "../Constants/ActionTypes";
 
 const initialState = {
 	month: null,
-	year: null,
+	year: 2018,
 	today: null,
 	base: [],
 	selectedMonth: {},
@@ -12,12 +12,53 @@ const initialState = {
 	initialValues: null
 };
 
-const createArr = maxNumber => {
+const createArr = (maxNumber, sing, count) => {
+	const year = 2018;
+	let month = null;
+	let monthName = null;
+	switch (sing) {
+		case "init": {
+			month = moment().month();
+			monthName = moment().format("MMMM");
+			break;
+		}
+		case "next": {
+			const date = new Date(year, count);
+			month = count;
+			monthName = moment(date).format("MMMM");
+			break;
+		}
+		case "prev": {
+			const date = new Date(year, count);
+			month = count;
+			monthName = moment(date).format("MMMM");
+			break;
+		}
+		default:
+			break;
+	}
+
 	let arr = [];
 	for (let i = 1; maxNumber >= i; i++) {
 		arr.push(i);
 	}
-	return arr;
+
+	const mewArr = arr.map(el => {
+		const date = new Date(year, month, el);
+		const now = new Date();
+		return {
+			id: el,
+			date,
+			prev: moment(date).isBefore(now),
+			events: [],
+			month: monthName,
+			day: moment(date).format("dddd")
+		};
+	});
+
+	const firstDayOfMonth = moment(new Date(year, count, 1)).format("dddd");
+	const addDay = emptyDays(firstDayOfMonth);
+	return addDay.concat(mewArr);
 };
 
 const emptyDays = data => {
@@ -48,36 +89,19 @@ export default (state = initialState, { type, payload }) => {
 		case Types.GET_INITIAL_INFO: {
 			const amountOfDays = moment().daysInMonth();
 			const month = moment().month();
-			const year = moment().year();
 			const today = new Date().getDate();
 			const monthName = moment().format("MMMM");
-			// moment().format("YYYY-MM-DD")
 
-			const firstDayOfMonth = moment(new Date(year, month, 1)).format("dddd");
-			const addDay = emptyDays(firstDayOfMonth);
-
-			const hasMonth = hasMonthInState(state.base, year, monthName);
+			const hasMonth = hasMonthInState(state.base, state.year, monthName);
 
 			if (hasMonth) {
 				return state;
 			}
 
-			const dayOfTheMonth = createArr(amountOfDays).map(el => {
-				const date = new Date(year, month, el);
-				const now = new Date();
-				return {
-					id: el,
-					date,
-					prev: moment(date).isBefore(now),
-					events: [],
-					month: monthName,
-					day: moment(date).format("dddd")
-				};
-			});
-
+			const dayOfTheMonth = createArr(amountOfDays, "init");
 			const selectedMonth = {
-				dayOfTheMonth: addDay.concat(dayOfTheMonth),
-				year,
+				dayOfTheMonth,
+				year: state.year,
 				today,
 				monthName
 			};
@@ -85,50 +109,33 @@ export default (state = initialState, { type, payload }) => {
 			return {
 				...state,
 				month: { count: month, name: monthName },
-				year,
 				today,
 				selectedMonth,
 				base: state.base.concat(selectedMonth)
 			};
 		}
 		case Types.PREV_MONTH: {
-			const count = state.month.count - 1 === -1 ? 11 : state.month.count - 1;
-			const year =
-				state.month.count === 0 && count === 11 ? state.year - 1 : state.year;
-			const date = new Date(year, count);
+			const count = state.month.count - 1 === -1 ? 0 : state.month.count - 1;
+			const date = new Date(state.year, count);
 			const monthName = moment(date).format("MMMM");
 			const today = new Date().getDate();
 			const month = { count, name: monthName };
 
-			const hasMonth = hasMonthInState(state.base, year, monthName);
+			const hasMonth = hasMonthInState(state.base, state.year, monthName);
 
 			if (hasMonth) {
 				const selectedMonth = state.base.filter(
-					el => el.year === year && el.monthName === monthName
+					el => el.year === state.year && el.monthName === monthName
 				)[0];
 				return { ...state, selectedMonth, month };
 			} else {
 				const amountOfDays = moment(date).daysInMonth();
 
-				const firstDayOfMonth = moment(new Date(year, count, 1)).format("dddd");
-				const addDay = emptyDays(firstDayOfMonth);
-
-				const dayOfTheMonth = createArr(amountOfDays).map(el => {
-					const date = new Date(year, count, el);
-					const now = new Date();
-					return {
-						id: el,
-						date,
-						events: [],
-						prev: moment(date).isBefore(now),
-						month: monthName,
-						day: moment(date).format("dddd")
-					};
-				});
+				const dayOfTheMonth = createArr(amountOfDays, "prev", count);
 
 				const selectedMonth = {
-					dayOfTheMonth: addDay.concat(dayOfTheMonth),
-					year,
+					dayOfTheMonth,
+					year: state.year,
 					today,
 					monthName
 				};
@@ -137,49 +144,33 @@ export default (state = initialState, { type, payload }) => {
 					...state,
 					month,
 					selectedMonth,
-					year,
 					today,
 					base: state.base.concat(selectedMonth)
 				};
 			}
 		}
 		case Types.NEXT_MONTH: {
-			const count = state.month.count + 1 === 12 ? 0 : state.month.count + 1;
-			const year =
-				state.month.count === 11 && count === 0 ? state.year + 1 : state.year;
-			const newDate = new Date(year, count);
+			const count = state.month.count + 1 === 12 ? 11 : state.month.count + 1;
+			const newDate = new Date(state.year, count);
 			const monthName = moment(newDate).format("MMMM");
 			const today = new Date().getDate();
 			const month = { count, name: monthName };
 
-			const hasMonth = hasMonthInState(state.base, year, monthName);
+			const hasMonth = hasMonthInState(state.base, state.year, monthName);
 
 			if (hasMonth) {
 				const selectedMonth = state.base.filter(
-					el => el.year === year && el.monthName === monthName
+					el => el.year === state.year && el.monthName === monthName
 				)[0];
 				return { ...state, selectedMonth, month };
 			} else {
 				const amountOfDays = moment(newDate).daysInMonth();
 
-				const firstDayOfMonth = moment(new Date(year, count, 1)).format("dddd");
-				const addDay = emptyDays(firstDayOfMonth);
+				const dayOfTheMonth = createArr(amountOfDays, "next", count);
 
-				const dayOfTheMonth = createArr(amountOfDays).map(el => {
-					const date = new Date(year, count, el);
-					const now = new Date();
-					return {
-						id: el,
-						date,
-						events: [],
-						prev: moment(date).isBefore(now),
-						month: monthName,
-						day: moment(date).format("dddd")
-					};
-				});
 				const selectedMonth = {
-					dayOfTheMonth: addDay.concat(dayOfTheMonth),
-					year,
+					dayOfTheMonth,
+					year: state.year,
 					today,
 					monthName
 				};
@@ -187,7 +178,6 @@ export default (state = initialState, { type, payload }) => {
 					...state,
 					month,
 					selectedMonth,
-					year,
 					today,
 					base: state.base.concat(selectedMonth)
 				};

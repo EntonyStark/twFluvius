@@ -18,13 +18,15 @@ export default class extends Component {
 				<Jumbotron>
 					<h1 className="display-3">Hello, world!</h1>
 					<p className="lead">
-						Привет всем! что бы посмотреть основную часть задания придется
-						авторизироваться, если у тебя не получается пытайся еще раз! Да
-						прибудет с вами сила!
+						Привет всем! что бы посмотреть (тестовый вариант) основную часть
+						задания придется авторизироваться, если у тебя не получается пытайся
+						еще раз! Да прибудет с вами сила!
 					</p>
 					<hr className="my-2" />
 					<p>Для просмотра первой части задания нажми на кнопочку :)</p>
-					<button onClick={this.redirect}>Кнопка</button>
+					<button onClick={this.redirect} className="main-page__btn">
+						Кнопка
+					</button>
 				</Jumbotron>
 			</div>
 		);
