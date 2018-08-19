@@ -1,0 +1,30 @@
+.main-page {
+	@include centerPage;
+}
+
+.additional-content {
+	&__task-block {
+		display: flex;
+		flex-flow: column nowrap;
+		width: 70%;
+	}
+
+	&__title {
+		font-size: 2.2rem;
+		padding: 2rem;
+	}
+
+	&__task {
+		padding-left: 4rem;
+	}
+
+	&__link {
+		text-decoration: none !important;
+		padding-left: 2rem;
+	}
+
+	&__ps {
+		padding-left: 2rem;
+		margin-top: 3rem;
+	}
+}

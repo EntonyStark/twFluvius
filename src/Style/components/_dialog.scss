@@ -1,0 +1,44 @@
+.dialog-modal {
+	position: relative;
+	&__delete-btn {
+		position: absolute;
+		top: 5%;
+		right: 5%;
+		border: 1px solid $general-color;
+		border-radius: 50%;
+		display: flex;
+		&:hover {
+			transform: translateY(3px);
+		}
+	}
+
+	&__icon {
+		width: 3rem;
+		height: 3rem;
+	}
+
+	&__confirm-box {
+		min-height: 20rem;
+		display: flex;
+		flex-flow: column nowrap;
+		justify-content: space-between;
+	}
+
+	&__title {
+		font-size: 3rem;
+		font-weight: 100;
+		padding: 2rem 0;
+	}
+
+	&__btn-box {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	&__button {
+		border-radius: 3px;
+		padding: 1rem;
+		outline: none !important;
+		cursor: pointer;
+	}
+}

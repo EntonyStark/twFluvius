@@ -1,0 +1,35 @@
+.header {
+	&__logo {
+		width: 4rem;
+		height: 4rem;
+	}
+	&__link {
+		padding: 1.5rem;
+		&,
+		&:link,
+		&:visited {
+			text-transform: uppercase;
+			text-decoration: none;
+			display: inline-block;
+			color: $mgreen;
+		}
+
+		&:hover {
+			color: $hover-for-link;
+		}
+	}
+
+	&__log-out {
+		padding: 1.5rem;
+		background-color: transparent;
+		text-transform: uppercase;
+		border: none;
+		color: $mgreen;
+		cursor: pointer;
+		outline: none !important;
+
+		&:hover {
+			color: $hover-for-link;
+		}
+	}
+}

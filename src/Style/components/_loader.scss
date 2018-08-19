@@ -1,0 +1,19 @@
+.loader {
+	display: flex;
+	justify-content: center;
+	&__cssload-speeding-wheel {
+		width: 49px;
+		height: 49px;
+		margin-top: 50%;
+		//margin: auto auto;
+		border: 3px solid rgb(0, 0, 0);
+		border-radius: 50%;
+		border-left-color: transparent;
+		border-right-color: transparent;
+		animation: cssload-spin 575ms infinite linear;
+		-o-animation: cssload-spin 575ms infinite linear;
+		-ms-animation: cssload-spin 575ms infinite linear;
+		-webkit-animation: cssload-spin 575ms infinite linear;
+		-moz-animation: cssload-spin 575ms infinite linear;
+	}
+}

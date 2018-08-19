@@ -1,0 +1,22 @@
+$icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
+// @import "~bootstrap-sass/assets/stylesheets/bootstrap";
+@import "~bootstrap/dist/css/bootstrap.css";
+
+@import "./abstracts/functions";
+@import "./abstracts/mixins";
+@import "./abstracts/variables";
+
+@import "./base/animations";
+@import "./base/typography";
+@import "./base/utilities";
+@import "./base/base";
+
+@import "./layout/header";
+@import "./layout/container";
+
+@import "./components/loader";
+@import "./components/dialog";
+
+@import "./pages/main";
+@import "./pages/auth";
+@import "./pages/calendar";

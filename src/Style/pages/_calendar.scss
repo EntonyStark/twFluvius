@@ -1,0 +1,199 @@
+.calendar {
+	width: 100%;
+
+	&__control {
+		display: flex;
+		justify-content: center;
+		padding: 3rem 0;
+	}
+
+	&__icon-box {
+		border: none;
+		outline: none !important;
+		background-color: transparent;
+		display: flex;
+		cursor: pointer;
+	}
+
+	&__icon {
+		width: 2rem;
+		height: 2rem;
+	}
+
+	&__mouth-name {
+		font-size: 2.5rem;
+		font-weight: 700;
+		padding: 0 5rem;
+	}
+
+	&__container {
+		display: flex;
+		justify-content: center;
+	}
+
+	&__box {
+		display: flex;
+		max-width: 148rem;
+		flex-flow: row wrap;
+		@include respond(150rem) {
+			max-width: 112rem;
+		}
+		// @include respond(117rem) {
+		// 	max-width: 78rem;
+		// }
+		@include respond(80rem) {
+			max-width: 92rem;
+		}
+		@include respond(60rem) {
+			display: block;
+		}
+	}
+
+	&__item {
+		display: flex;
+		flex-flow: column;
+		align-items: center;
+		position: relative;
+		width: 20rem;
+		height: 20rem;
+		border: 1px solid $general-color;
+		border-radius: 3px;
+		margin-right: 1rem;
+		margin-bottom: 1rem;
+		box-shadow: 0 1rem 2rem rgba($color-black, 0.2);
+
+		@include respond(150rem) {
+			width: 15rem;
+			height: 15rem;
+		}
+
+		@include respond(80rem) {
+			width: 12rem;
+			height: 12rem;
+		}
+		@include respond(60rem) {
+			width: 20rem;
+			height: 20rem;
+		}
+
+		&--empty {
+			border: none;
+			box-shadow: none;
+			@include respond(60rem) {
+				display: none;
+			}
+		}
+
+		&--today {
+			background-color: $color-grey-2;
+		}
+	}
+
+	&__title {
+		width: 100%;
+
+		&--today {
+			color: $color-white;
+		}
+	}
+
+	&__day {
+		font-size: 5rem;
+		padding-left: 1rem;
+		@include respond(80rem) {
+			font-size: 2rem;
+		}
+
+		@include respond(52rem) {
+			font-size: 5rem;
+			padding-left: 1rem;
+		}
+	}
+
+	&__add-event {
+		border: 1px solid $general-color;
+		border-radius: 50%;
+		outline: none !important;
+		background-color: transparent;
+		cursor: pointer;
+		position: absolute;
+		top: 1rem;
+		right: 1rem;
+		display: flex;
+
+		&--today {
+			border: 1px solid $color-white;
+		}
+
+		@include respond(80rem) {
+			top: 0.3rem;
+			right: 0.3rem;
+		}
+
+		@include respond(52rem) {
+			top: 1.5rem;
+			right: 1.5rem;
+		}
+
+		&:disabled {
+			border-color: $color-grey-2;
+			cursor: no-drop;
+			&:hover {
+				transform: none;
+			}
+		}
+
+		&:hover {
+			transform: translateY(3px);
+		}
+	}
+	&__add-event:disabled > &__icon {
+		fill: $color-grey-2;
+	}
+
+	&__event {
+		width: 80%;
+		border: 1px solid;
+		flex: 0 0 40%;
+		position: relative;
+		display: flex;
+		justify-content: center;
+		cursor: pointer;
+		border-radius: 2px;
+		&:hover {
+			transform: translateY(3px);
+		}
+
+		&--prev {
+			background-color: $color-red;
+		}
+		&--next {
+			background-color: $mgreen;
+		}
+	}
+
+	&__event-name {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		overflow: hidden;
+		padding: 0 1rem;
+	}
+
+	&__edit-event {
+		border: 1px solid $general-color;
+		border-radius: 50%;
+		outline: none !important;
+		background-color: transparent;
+		position: absolute;
+		top: 0;
+		right: 0;
+	}
+
+	&__remove-event {
+		border: 1px solid $general-color;
+		border-radius: 50%;
+		outline: none !important;
+		background-color: transparent;
+	}
+}
